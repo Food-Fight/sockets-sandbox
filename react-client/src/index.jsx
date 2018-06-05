@@ -15,7 +15,7 @@ class App extends React.Component {
       name: '',
       message:''
     }
-    this.socket = io.connect(process.env.PORT || 5000);
+    this.socket = io.connect(`${process.env.DOMAIN || 'http://localhost'}:${process.env.PORT || 5000}`);
     this.socket.on('chat', () => {
       this.fetch();
     });
@@ -27,7 +27,7 @@ class App extends React.Component {
   
   fetch() {
     let index = this;
-    axios.get('/items')
+    axios.get('/messages')
     .then(function (results) {
       index.setState({
         items: results.data
@@ -39,12 +39,11 @@ class App extends React.Component {
 
   sendMessage() {
     let index = this;
-    console.log('THIS IS THE SOCKET', this.socket);
     this.socket.emit('chat', {
       name: this.state.name,
       message: this.state.message
     });
-    axios.post('/items', {
+    axios.post('/messages', {
       name: this.state.name,
       message: this.state.message
     })
