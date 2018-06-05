@@ -40,8 +40,8 @@ app.post('/items', function (req, res) {
   });
 });
 
-var server = app.listen(process.env.port || 5000, function() {
-  console.log('listening on port ', process.env.port || 5000);
+var server = app.listen(process.env.PORT || 5000, function() {
+  console.log('listening on port ', process.env.PORT || 5000);
 });
 
 var io = socket(server);
