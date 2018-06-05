@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://heroku_0l61t1lh:m517foi3891b0vu1985qmo1rcp@ds135810.mlab.com:35810/heroku_0l61t1lh');
 
 var db = mongoose.connection;
 
@@ -11,15 +11,15 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+var messageSchema = mongoose.Schema({
+  name: String,
+  message: String
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var Message= mongoose.model('Message', messageSchema);
 
 var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+  Message.find({}, function(err, items) {
     if(err) {
       callback(err, null);
     } else {
@@ -28,4 +28,20 @@ var selectAll = function(callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+var saveMessage = function(message, callback) {
+  new Message({
+    name: message.name,
+    message: message.message
+  }).save((err) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null);
+    }
+  });
+};
+
+module.exports = {
+  saveMessage: saveMessage,
+  selectAll: selectAll,
+}
