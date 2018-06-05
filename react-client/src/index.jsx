@@ -27,7 +27,7 @@ class App extends React.Component {
   
   fetch() {
     let index = this;
-    axios.get('http://localhost:5000/items')
+    axios.get('/items')
     .then(function (results) {
       index.setState({
         items: results.data
@@ -44,7 +44,7 @@ class App extends React.Component {
       name: this.state.name,
       message: this.state.message
     });
-    axios.post('http://localhost:5000/items', {
+    axios.post('/items', {
       name: this.state.name,
       message: this.state.message
     })
