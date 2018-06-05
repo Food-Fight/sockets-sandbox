@@ -15,7 +15,7 @@ class App extends React.Component {
       name: '',
       message:''
     }
-    this.socket = io.connect(process.env.PORT || 'http://localhost:5000');
+    this.socket = io.connect(`http://localhost:${process.env.PORT || 5000}`);
     this.socket.on('chat', () => {
       this.fetch();
     });
